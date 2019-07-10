@@ -39,8 +39,8 @@ app.post('/api/user/login',(req,res)=>{
 
 
 app.get('/api/user/profile',auth,(req,res)=>{
-    console.log(req)
     console.log('inside profile');
+    console.log(req.token)
     
 
 
