@@ -1,0 +1,21 @@
+<h1>Login </h1>
+<table>
+    <form name="loginForm">
+    <tr>
+        <td>User Name</td>
+        <td><input name="userName" type="text" ng-model="user.userName" required></td>
+        <td><span ng-show="loginForm.userName.$error.required && loginForm.userName.$dirty">User Name is required</span></td>
+    </tr>
+    <tr>
+            <td>password</td>
+            <td><input name="password" type="password" ng-model="user.password" required></td>
+            <td><span ng-show="loginForm.password.$error.required && loginForm.password.$dirty">password is required</span></td>
+    </tr>
+    <tr>
+            
+            <td colspan="2"><input type="button" ng-click="onLogin()" value="login"></td>
+    </tr>
+
+    </form>
+
+</table>

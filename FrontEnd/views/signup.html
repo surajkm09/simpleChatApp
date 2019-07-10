@@ -1,0 +1,33 @@
+<h1>Sign up</h1>
+
+
+<table>
+    <form name="signUpForm">
+        <tr>
+            <td>First Name</td>
+            <td><input type="text" name="firstName"ng-model="user.firstName" required></td>
+            <td><span ng-show="signUpForm.firstName.$error.required && signUpForm.firstName.$dirty">First Name is required</span></td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input type="text" name="lastName" ng-model="user.lastName" required></td>
+            <td><span ng-show="signUpForm.lastName.$error.required && signUpForm.lastName.$dirty">last Name is required</span></td>
+        </tr>
+        <tr>
+                <td>User Name</td>
+                <td><input type="text" name="userName" ng-model="user.userName" required></td>
+                <td><span ng-show="signUpForm.userName.$error.required && signUpForm.userName.$dirty">user Name is required</span></td>
+        </tr>
+        <tr>
+                <td>password</td>
+                <td><input type="password" name="password" ng-model="user.password" required></td>
+                <td><span ng-show="signUpForm.password.$error.required && signUpForm.password.$dirty">password is required</span></td>
+        </tr>
+
+        <tr> <td colspan="3"> <input type="button" ng-click="onRegister()" value="Register"></td></tr>
+
+
+
+
+    </form>
+</table>
