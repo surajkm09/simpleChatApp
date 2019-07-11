@@ -1,7 +1,9 @@
 
 const http = require('http')
 const app = require('./BackEnd/app')
+
 const server = http.createServer(app)
+
 
 
 
@@ -15,5 +17,6 @@ server.on('error',(error)=>{
     
 })
 
-server.listen(3333);
+
+module.exports =server
 
