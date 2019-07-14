@@ -13,6 +13,8 @@ module.exports.login=function(req,res){
             if(user)
             {
                 token = user.generateJWT();
+               
+                
                 res.status(200)
                 res.json({
                     "token":token
@@ -24,6 +26,7 @@ module.exports.login=function(req,res){
 
         })(req,res);
 }
+
 
 
 module.exports.register = function(req,res){
@@ -48,3 +51,4 @@ module.exports.register = function(req,res){
 
 
 }
+
