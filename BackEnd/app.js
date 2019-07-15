@@ -36,6 +36,11 @@ io.on("connection",socket => {
     socket.on('logout',() => {
       socket.disconnect();
     });
+    socket.on('message-send',(data)=>{
+      data = JSON.parse(data);
+      console.log(data)
+      sockets[data.userName].emit('message-receive',data.message);
+    });
     socket.on('disconnect',(data)=>{
        delete sockets[decodedToken.userName];
        for (const key in sockets) {
