@@ -3,7 +3,7 @@
 
 <h1>online users</h1>
 <ol>
-  <li ng-repeat="user in users">{{ user }}</li>
+  <li ng-repeat="user in users"><a href="/chat?userName={{user}}">{{ user }}</a></li>
 </ol>
 
 <input type="button" ng-click="onLogout()" value="Logout">
