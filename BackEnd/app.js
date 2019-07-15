@@ -28,11 +28,20 @@ io.on("connection",socket => {
     }
     for (const key in sockets) {
       if (sockets.hasOwnProperty(key)) {
-        sockets[key].emit('onlineUsers',JSON.stringify(Object.keys(sockets)));
+        sockets[key].emit('onlineUsers',JSON.stringify(Object.keys(sockets).filter((value)=>{
+          if(value!==key)
+          {
+            return true ;
+          }
+          else 
+          {
+            return false ;
+          }
+        })));
         
       }
     }
-    socket.emit('onlineUsers',JSON.stringify(Object.keys(sockets)))
+ 
     socket.on('logout',() => {
       socket.disconnect();
     });
@@ -59,7 +68,7 @@ app.use(passport.initialize());
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  res.append("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
+  res.append("Access-Control-Allow-Origin", "http://localhost:3000");
   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   res.append(
     "Access-Control-Allow-Headers",

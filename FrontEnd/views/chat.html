@@ -1,6 +1,6 @@
 <h1>you are chatting with </h1>
 <ol>
-    <li ng-repeat="message in messages">{{message}}</li>
+    <li ng-repeat="message in messages track by $index">{{message}}</li>
 </ol>
 <input ng-model="responeMessage" type="text">
 <input type="button" ng-click="onSend()" value="send">

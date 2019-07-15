@@ -1,8 +1,8 @@
 
 
-var app = angular.module("main-application", []);
+var app = angular.module("main-application",['ngRoute','ngMaterial']);
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
   $routeProvider.when("/", {
     templateUrl: "/views/main.html",
     controller: "maincontroller"
@@ -26,11 +26,22 @@ app.config(function($routeProvider, $locationProvider) {
     templateUrl: "/views/profile.html",
     controller: "profilecontroller"
   });
-  $locationProvider.html5Mode(true);
-});
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
+}]);
 
 
-
+app.factory("Page",function(){
+  var title ="main";
+  return {
+    title : ()=>{return  title } ,
+    setTitle :(temptitle)=>{
+      title =temptitle 
+    }
+  }
+})
 app.factory("webSocket",function(){
   var webSocket ;
   return {
@@ -80,7 +91,7 @@ app.factory("backEndService", function($http, generateBackendURL) {
     },
     getWebSocket: function(token) {
       var socket = io.connect(generateBackendURL("websocket"), {
-        query: "token=" + token.token
+        query: "token=" + token.data.token
       });
       console.log(socket);
       return socket;
@@ -90,12 +101,14 @@ app.factory("backEndService", function($http, generateBackendURL) {
     }
   };
 });
-app.controller("chatcontroller",function($scope,webSocket){
-    if(localStorage.getItem('userName')===null)
+app.controller("chatcontroller",function($scope,webSocket,Page){
+    if(sessionStorage.getItem('userName')===null)
     {
       $scope.error =" An error Has occurred"
       return ; 
     }
+
+    Page.setTitle(sessionStorage.getItem('userName')+' chat')
     $scope.messages = [] ; 
 
     $scope.socket = webSocket.get();
@@ -106,34 +119,36 @@ app.controller("chatcontroller",function($scope,webSocket){
         $scope.messages.push(data);
       })
     });
-    console.log($scope.socket)
     $scope.responeMessage =""; 
     $scope.onSend = function()
     {
       data={};
-      data.userName = localStorage.getItem('userName');
+      data.userName = sessionStorage.getItem('userName');
+      console.log("user Name sending Message to ")
+      console.log(data.userName);
+      
       data.message = $scope.responeMessage;
       $scope.messages.push($scope.responeMessage) 
       $scope.socket.emit('message-send',JSON.stringify(data));
       $scope.responeMessage="";
     }
-    $scope.userName = localStorage.getItem('userName')
+    $scope.userName = sessionStorage.getItem('userName')
 
 
 
 
 })
-app.controller("profilecontroller", function($scope, backEndService,$location,webSocket) {
+app.controller("profilecontroller", function($scope, backEndService,$location,webSocket,Page) {
   console.log("inside profile controller");
-  if (localStorage.getItem("token") === null) {
+  Page.setTitle("Profile");
+  if (sessionStorage.getItem("token") === null) {
     $scope.error = " Token not set !!";
     return;
   }
   $scope.users = [];
-  $scope.token = JSON.parse(localStorage.getItem("token"));
+  $scope.token = JSON.parse(sessionStorage.getItem("token"));
   $scope.socket = backEndService.getWebSocket($scope.token);
   webSocket.set($scope.socket);
-  //localStorage.setItem('webSocket',JSON.stringify($scope.socket))
   $scope.socket.on("onlineUsers", function(data) {
       console.log('inside onlineUsers');
     $scope.$apply(function() {
@@ -147,14 +162,16 @@ app.controller("profilecontroller", function($scope, backEndService,$location,we
   }
   $scope.onUserClick=function(user){
     console.log(user)
-    localStorage.setItem('userName',user);
+    sessionStorage.setItem('userName',user);
+    console.log(sessionStorage.getItem('userName'));
     $location.path('/chat');
 
   }
 });
 
-app.controller("signupcontroller", function($scope, backEndService) {
+app.controller("signupcontroller", function($scope, backEndService,Page) {
   $scope.user = {};
+  Page.setTitle('signup')
   $scope.onRegister = function() {
     if (
       $scope.firstName === "" ||
@@ -166,36 +183,43 @@ app.controller("signupcontroller", function($scope, backEndService) {
     } else {
       backEndService
         .signup($scope.user)
-        .success(data => {
+        .then(data => {
           console.log("succeful");
         })
-        .error(error => {
+        .catch(error => {
           console.log(error);
         });
     }
   };
 });
 
-app.controller("logincontroller", function($scope, backEndService, $location) {
+app.controller("logincontroller", function($scope, backEndService, $location,Page) {
   $scope.user = {};
+  Page.setTitle('login')
   $scope.onLogin = function() {
     if ($scope.user.userName === "" || $scope.user.password === "") {
       return;
     } else {
       backEndService
         .login($scope.user)
-        .success(data => {
+        .then(data => {
           console.log(data);
           data = JSON.stringify(data);
-          localStorage.setItem("token", data);
-          console.log(localStorage.getItem("token"));
+          sessionStorage.setItem("token", data);
+          console.log(sessionStorage.getItem("token"));
           $location.path("/profile");
         })
-        .error(error => {
+        .catch(error => {
           console.log(error);
         });
     }
   };
 });
+app.controller("index-controller",function($scope ,Page){
+  $scope.title = Page.title();
 
-app.controller("maincontroller", function($scope) {});
+})
+app.controller("maincontroller", function($scope,Page) {
+  console.log(Page.title());
+ 
+});
