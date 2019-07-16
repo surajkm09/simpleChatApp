@@ -4,15 +4,99 @@ a {
     color: aliceblue;
 }
 .mainCard {
-    margin-top: 25% ;
+    margin-top: 10% ;
     margin-bottom: 25%;
-    width: 75%;
+    width: 50%;
     margin-left: auto ; 
     margin-right: auto ;
 }
 .mainTitle {
     text-align: center; 
 }
-.mainDiv {
-    height: 100%;
+.mdTitle {
+  
+}
+
+.loginCard { 
+    margin-left: auto  ;
+    margin-right: auto ; 
+    width: 50%;
+    margin-top: 10%;
+
+}
+.md-headline {
+    font-size: 50px;
+
+}
+
+
+.profileHeader { 
+    width: 100% ;
+    height: 20%;
+    background-color: #303F9F ;
+}
+
+.profileTitleText {
+    color: aliceblue ;
+}
+
+body {
+    min-height: 100% ;
+}
+
+.profileFooter{
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+}
+.profileCard{
+    width: 100%; 
+    min-height: 100%;
+}
+.headerAndFooter{
+    background-color: #303F9F ;
+    color: aliceblue ;
+}
+.profileBody {
+    height: 50%;
+}
+.app-component-filler {  
+    min-height: 100vh
+  }
+
+.chatWidth {
+    width: 50%;
+}
+/* md-list-item, md-list-item .md-list-item-inner {
+    min-height: 20px;
+    height: 25px;
+    width: 25%;
+    align-items: flex-end;
+    align-content: flex-end;
+    text-align: end;
+} */
+
+li {
+    margin-top: 5px;
+    width:50% ;
+    list-style: none;
+    color:aliceblue;
+    background-color: #303F9F ;
+    padding: 15px 10px 15px 10px ;
+   
+
+}
+.chatCard {
+    width: 100%;
+    height:100%;
+}
+.signupCard {
+
+    height: 75%;
+    width: 50% ; 
+    margin-left:auto ; 
+    margin-right: auto ; 
+    margin-top: 10% ;
+    margin-bottom: 10%;
 }

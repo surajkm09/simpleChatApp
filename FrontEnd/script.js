@@ -110,13 +110,16 @@ app.controller("chatcontroller",function($scope,webSocket,Page){
 
     Page.setTitle(sessionStorage.getItem('userName')+' chat')
     $scope.messages = [] ; 
-
+    data.userName = sessionStorage.getItem('userName');
     $scope.socket = webSocket.get();
     $scope.socket.on('message-receive',function(data){
       $scope.$apply(function(){
+        message ={}
         console.log("message received is ")
-        console.log(data)
-        $scope.messages.push(data);
+        message.data =data ; 
+        message.isReceived=true ;
+        console.log(message)
+        $scope.messages.push(message);
       })
     });
     $scope.responeMessage =""; 
@@ -128,7 +131,9 @@ app.controller("chatcontroller",function($scope,webSocket,Page){
       console.log(data.userName);
       
       data.message = $scope.responeMessage;
-      $scope.messages.push($scope.responeMessage) 
+      data.data =$scope.responeMessage ;
+      data.isReceived =false ;
+      $scope.messages.push(data) 
       $scope.socket.emit('message-send',JSON.stringify(data));
       $scope.responeMessage="";
     }
@@ -167,10 +172,15 @@ app.controller("profilecontroller", function($scope, backEndService,$location,we
     $location.path('/chat');
 
   }
+  $scope.isUserEmpty = function(){
+    console.log( angular.equals($scope.users,[]))
+    return angular.equals($scope.users,[]);
+  }
 });
 
 app.controller("signupcontroller", function($scope, backEndService,Page) {
   $scope.user = {};
+  $scope.message="";
   Page.setTitle('signup')
   $scope.onRegister = function() {
     if (
@@ -184,7 +194,12 @@ app.controller("signupcontroller", function($scope, backEndService,Page) {
       backEndService
         .signup($scope.user)
         .then(data => {
-          console.log("succeful");
+          if(data.status===200){
+            $scope.message = "User created Successfully !"; 
+          }
+          else{
+            $scope.message = data.data.message ;
+          }
         })
         .catch(error => {
           console.log(error);
@@ -195,6 +210,7 @@ app.controller("signupcontroller", function($scope, backEndService,Page) {
 
 app.controller("logincontroller", function($scope, backEndService, $location,Page) {
   $scope.user = {};
+  $scope.message="";
   Page.setTitle('login')
   $scope.onLogin = function() {
     if ($scope.user.userName === "" || $scope.user.password === "") {
@@ -210,7 +226,15 @@ app.controller("logincontroller", function($scope, backEndService, $location,Pag
           $location.path("/profile");
         })
         .catch(error => {
+
+          if(error.status===401)
+          {
+            $scope.message = "Wrong User Name/password Try again !"
+          }
+          else {
+            $scope.message ="An error has occurred please contact admin"
           console.log(error);
+          }
         });
     }
   };

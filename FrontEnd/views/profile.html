@@ -1,9 +1,50 @@
-<h1>Welcome To chat App </h1>
+<div >
+    <md-card  class="profileCard">
+
+        <md-card-header class="headerAndFooter" ali>
+          <md-card-header-text layout-align="center center">
+            <span class="md-title"><h2>Chat Application</h2></span>
+            <span class="md-subhead" style="color:aliceblue;">Welcome to chat Application</span>
+          </md-card-header-text>
+        </md-card-header>
+        <!-- <md-card-title>
+            <md-card-title-text> -->
+              
+              
+            <!-- </md-card-title-text>
+        </md-card-title> -->
+        <md-card-content class="profileBody">
+            <span class="md-headline">Online Users</span><br>
+            <span class="md-subhead" ng-if="!isUserEmpty()">Click on user to start a chat </span>
+            <span class="md-subhead" ng-if="isUserEmpty()">no users are online ! </span>
+          <md-content class="profileBody" flex>
+              <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="onUserClick(user)">
+                  
+                  <div class="md-list-item-text" layout="column">
+                    <h3>{{user}}</h3>
+                  </div>
+                </md-list-item>
+              </md-list>
+          </md-content>
+        </md-card-content>
+    
+
+      <md-card-footer  class="headerAndFooter">
+          &copy suraj kumar  
+      </md-card-footer>
+     
+
+    </mat-card>
+  </div>
 
 
-<h1>online users</h1>
-<ol>
-  <li ng-repeat="user in users" ng-click="onUserClick(user)">{{user}}</li>
-</ol>
 
-<input type="button" ng-click="onLogout()" value="Logout">
+
+
+
+
+
+
+
+

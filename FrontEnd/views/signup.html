@@ -1,33 +1,85 @@
-<h1>Sign up</h1>
 
+<md-card class="signupCard">
+        <md-card-header class="headerAndFooter">
+          <md-card-header-text>
+            <span class="md-title"
+              ><h1>Sign up</h1></span
+            >
+          </md-card-header-text>
+        </md-card-header>
 
-<table>
-    <form name="signUpForm">
-        <tr>
-            <td>First Name</td>
-            <td><input type="text" name="firstName"ng-model="user.firstName" required></td>
-            <td><span ng-show="signUpForm.firstName.$error.required && signUpForm.firstName.$dirty">First Name is required</span></td>
-        </tr>
-        <tr>
-            <td>Last Name</td>
-            <td><input type="text" name="lastName" ng-model="user.lastName" required></td>
-            <td><span ng-show="signUpForm.lastName.$error.required && signUpForm.lastName.$dirty">last Name is required</span></td>
-        </tr>
-        <tr>
-                <td>User Name</td>
-                <td><input type="text" name="userName" ng-model="user.userName" required></td>
-                <td><span ng-show="signUpForm.userName.$error.required && signUpForm.userName.$dirty">user Name is required</span></td>
-        </tr>
-        <tr>
-                <td>password</td>
-                <td><input type="password" name="password" ng-model="user.password" required></td>
-                <td><span ng-show="signUpForm.password.$error.required && signUpForm.password.$dirty">password is required</span></td>
-        </tr>
+    <md-card-content>
+        <form name="signUpForm">
+                <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                          <label>First Name</label>
+                          <input
+                            md-maxlength="30"
+                            required
+                            name="firstName"
+                            ng-model="user.firstName"
+                          />
+                
+                          <div ng-messages="signUpForm.firstName.$error">
+                            <div ng-message="required">First Name is required.</div>
+                          </div>
+                        </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                          <label>Last Name</label>
+                          <input
+                            md-maxlength="30"
+                            required
+                            name="lastName"
+                            ng-model="user.lastName"
+                          />
+                
+                          <div ng-messages="signUpForm.lastName.$error">
+                            <div ng-message="required">Last Name is required.</div>
+                          </div>
+                        </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                          <label>User Name</label>
+                          <input
+                            md-maxlength="30"
+                            required
+                            name="userName"
+                            ng-model="user.userName"
+                          />
+                
+                          <div ng-messages="signUpForm.userName.$error">
+                            <div ng-message="required">User Name is required.</div>
+                          </div>
+                        </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                          <label>password</label>
+                          <input
+                            md-maxlength="30"
+                            required
+                            type="password"
+                            name="password"
+                            ng-model="user.password"
+                          />
+                
+                          <div ng-messages="signUpForm.password.$error">
+                            <div ng-message="required">password is required.</div>
+                          </div>
+                        </md-input-container>
+                </div>
+            </form>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center">
+            <md-button class="md-raised md-primary" ng-click="onRegister()">
+              Register
+            </md-button>
+    </md-card-actions>
+    <md-card-footer class="headerAndFooter">
+        {{message}}
+    </md-card-footer>
 
-        <tr> <td colspan="3"> <input type="button" ng-click="onRegister()" value="Register"></td></tr>
-
-
-
-
-    </form>
-</table>
+</md-card>

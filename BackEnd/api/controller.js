@@ -37,18 +37,29 @@ module.exports.register = function(req,res){
     user.userName = req.body.user.userName ; 
     user.setPassword(req.body.user.password);
 
-    user.save((error)=>{
+    console.log(user.userName) ;
+   
+        user.save((error)=>{
         if(error)
         {   
             console.log('error has occurred in save!!');
-            console.error(error)
+            console.error(error);
+            if(error.code===11000)
+            {
+                res.status(201)
+                res.json({"message":"user name already exits!"})
+            }
+
         }
+        else{
         var token ; 
         token = user.generateJWT();
         res.status(200);
         res.json({"token":token});
+        }
     })
-
+    
 
 }
+
 
